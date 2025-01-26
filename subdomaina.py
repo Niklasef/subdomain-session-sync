@@ -1,21 +1,20 @@
-from flask import Flask, jsonify, make_response
+from flask import Flask, render_template, make_response
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return jsonify({"message": "Hello from Subdomain A!"})
-
-@app.route('/set-cookie')
-def set_cookie():
-    response = make_response(jsonify({"message": "Cookie set by Subdomain A!"}))
+    # Render the HTML template and create a response
+    response = make_response(render_template('index.html'))
+    
+    # Set the cookie in the response
     response.set_cookie(
-        'shared_cookie', 
+        'shared_cookie',
         'value_from_a', 
-        domain='.rootdomain.com',  # Adjust as needed based on your testing setup
-        secure=False,             # Set to True if using HTTPS
-        samesite='Lax',
-        httponly=True             # Prevent JavaScript access
+        domain='.rootdomain.com',  # Adjust as needed for your setup
+        secure=False,              # Use True if testing on HTTPS
+        samesite='Lax',            # Allows same-site navigation and AJAX
+        httponly=True              # Prevent JavaScript access
     )
     return response
 
