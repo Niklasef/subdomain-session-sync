@@ -4,10 +4,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    # Render the HTML template and create a response
-    response = make_response(render_template('index.html'))
-    
-    # Set the cookie in the response
+    # Serve the HTML template
+    return render_template('index.html')
+
+@app.route('/set-cookie')
+def set_cookie():
+    # Create a response for setting the cookie
+    response = make_response({"message": "Cookie has been set by Subdomain A!"})
     response.set_cookie(
         'shared_cookie',
         'value_from_a', 
